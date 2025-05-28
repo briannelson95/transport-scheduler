@@ -8,7 +8,74 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(uuid())
-  name  String
-  email String @unique
+  id       String   @id @default(uuid())
+  email    String   @unique
+  name     String
+  type     UserType
+  trips    Trip[]   @relation("UserTrips")
+}
+
+model Trip {
+  id             String      @id @default(uuid())
+  date           DateTime
+  driver         Driver      @relation(fields: [driverId], references: [id])
+  driverId       String
+  bus            Bus         @relation(fields: [busId], references: [id])
+  busId          String
+  from_location  TripLocation @relation("FromLocation", fields: [fromLocationId], references: [id])
+  fromLocationId String
+  to_location    TripLocation @relation("ToLocation", fields: [toLocationId], references: [id])
+  toLocationId   String
+  duration       Int
+  status         Canceled?
+
+  User User[] @relation("UserTrips")
+}
+
+model Driver {
+  id     String   @id @default(uuid())
+  name   String
+  title  String?
+  rate   Float
+  trips  Trip[]
+}
+
+model Bus {
+  id                String   @id @default(uuid())
+  number            Int
+  type              BusType
+  number_passengers Int
+  wheelchair        Boolean
+  nurse             Boolean
+  trips             Trip[]
+}
+
+model TripLocation {
+  id      String  @id @default(uuid())
+  name    String
+  coordsX Float
+  coordsY Float
+  fromTrips Trip[] @relation("FromLocation")
+  toTrips   Trip[] @relation("ToLocation")
+}
+
+model Canceled {
+  id           String   @id @default(uuid())
+  canceled     Boolean  @default(false)
+  canceled_at  DateTime?
+  canceled_by  String?
+  reason       String?
+  trip         Trip     @relation(fields: [tripId], references: [id])
+  tripId       String   @unique
+}
+
+enum BusType {
+  Van
+  Bus
+}
+
+enum UserType {
+  admin
+  driver
+  requester
 }

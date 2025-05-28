@@ -12,19 +12,8 @@ interface ModalProps {
     onClose: () => void;
 }
 
-interface Data {
-    date: any;
-    passengers: number;
-    pickupLocation: string;
-    dropoffLocation: string;
-    nurseRequired: boolean;
-    hasWheelChair: boolean;
-    numberWheelChair?: number;
-    recurring: boolean;
-}
-
 export default function AddTripModal({ show, onClose }: ModalProps) {
-    const [data, setData] = useState<Data>({
+    const [data, setData] = useState<RequestData>({
         date: new Date(),
         passengers: 0,
         pickupLocation: '',

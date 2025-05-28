@@ -50,3 +50,14 @@ interface User {
     name: string;
     type: "admin" | "driver" | "requester";
 }
+
+interface RequestData {
+    date: any;
+    passengers: number;
+    pickupLocation: string;
+    dropoffLocation: string;
+    nurseRequired: boolean;
+    hasWheelChair: boolean;
+    numberWheelChair?: number;
+    recurring: boolean;
+}
