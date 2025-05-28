@@ -24,8 +24,6 @@ interface Data {
 }
 
 export default function AddTripModal({ show, onClose }: ModalProps) {
-    if (!show) return null;
-
     const [data, setData] = useState<Data>({
         date: new Date(),
         passengers: 0,
@@ -36,6 +34,8 @@ export default function AddTripModal({ show, onClose }: ModalProps) {
         numberWheelChair: 0,
         recurring: false,
     })
+
+    if (!show) return null;
 
     const handleNurseSelect = (option: string) => {
         const booleanValue = option === 'yes';
