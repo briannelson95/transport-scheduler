@@ -7,7 +7,6 @@ This is a self-hostable version of the **Transport Scheduler** web app, built wi
 ## ✅ Project Overview
 
 - 📦 App lives in: `apps/web/`
-- 📄 Single root-level `package.json`
 - 🐳 Dockerized with support for PostgreSQL + Redis
 - ⚙️ Prisma ready with `.env` support
 - 🔁 Supports hot reloading for development
@@ -95,3 +94,7 @@ docker system prune -af
 ## 📌 Notes
 - Future SaaS support will include Stripe integration, tenant isolation, and cloud-hosted tiers.
 - Right now the focus is stability and self-hosting with a solid dev workflow.
+
+# Development 
+- working db connection
+- frontend app `/apps/web` is unable to read variables from root `.env`

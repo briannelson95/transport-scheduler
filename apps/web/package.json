@@ -1,11 +1,14 @@
 {
-  "name": "transport-schedule",
+  "name": "web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "migrate": "prisma migrate dev",
+    "generate": "prisma generate",
+    "studio": "prisma studio",
     "lint": "next lint"
   },
   "dependencies": {

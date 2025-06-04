@@ -7,12 +7,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Organization {
+  id            String  @id @default(cuid())
+  name          String
+  users         User[]
+  drivers       Driver[]
+  buses         Bus[]
+  trips         Trip[]
+  tripLocations TripLocation[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
 model User {
-  id       String   @id @default(uuid())
-  email    String   @unique
-  name     String
-  type     UserType
-  trips    Trip[]   @relation("UserTrips")
+  id              String   @id @default(uuid())
+  email           String   @unique
+  name            String
+  type            UserType
+  trips           Trip[]   @relation("UserTrips")
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model Trip {
@@ -29,15 +45,23 @@ model Trip {
   duration       Int
   status         Canceled?
 
-  User User[] @relation("UserTrips")
+  users           User[] @relation("UserTrips")
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model Driver {
-  id     String   @id @default(uuid())
-  name   String
-  title  String?
-  rate   Float
-  trips  Trip[]
+  id              String   @id @default(uuid())
+  name            String
+  title           String?
+  rate            Int
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  trips           Trip[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model Bus {
@@ -47,16 +71,23 @@ model Bus {
   number_passengers Int
   wheelchair        Boolean
   nurse             Boolean
+  organizationId    String
+  organization      Organization @relation(fields: [organizationId], references: [id])
   trips             Trip[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model TripLocation {
-  id      String  @id @default(uuid())
-  name    String
-  coordsX Float
-  coordsY Float
-  fromTrips Trip[] @relation("FromLocation")
-  toTrips   Trip[] @relation("ToLocation")
+  id              String  @id @default(uuid())
+  name            String
+  coordsX         Float
+  coordsY         Float
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id])
+
+  fromTrips       Trip[] @relation("FromLocation")
+  toTrips         Trip[] @relation("ToLocation")
 }
 
 model Canceled {
