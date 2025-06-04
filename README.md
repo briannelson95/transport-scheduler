@@ -98,3 +98,22 @@ docker system prune -af
 # Development 
 - working db connection
 - frontend app `/apps/web` is unable to read variables from root `.env`
+
+## How to Work in Dev
+Start the docker container, in the root run
+```
+docker compose up -d
+```
+This will start just the postgres db as a docker container
+
+```
+cd apps/web
+bun dev
+```
+This starts the frontend application, you can see the frontend at [http://localhost:3000](http://localhost:3000)
+
+If you would like a visual option of the database, from the root you can run 
+```
+bunx prisma studio
+```
+This will run the prisma studio at [http://localhost:5555](http://localhost:5555)
