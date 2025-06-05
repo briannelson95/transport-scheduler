@@ -8,6 +8,9 @@ const nextConfig = {
                 permanent: true
             }
         ]
+    },
+    env: {
+        NEXT_PUBLIC_DEFAULT_ORGANIZATION: process.env.DEFAULT_ORGANIZATION
     }
 };
 

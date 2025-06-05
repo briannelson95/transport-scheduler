@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@lib/prisma';
+import { getOrganizationId } from '@lib/getOrganizationId'
 
 export async function POST() {
-
-    const organizationId = process.env.DEFAULT_ORGANIZATION;
-
     try {
+        const organizationId = await getOrganizationId();
+
         const trip = await prisma.trip.create({
             data: {
                 date: new Date().toISOString(),

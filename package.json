@@ -1,11 +1,28 @@
 {
   "private": true,
   "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "next dev apps/web",
+    "build": "next build ./apps/web",
+    "start": "next start ./apps/web",
+    "migrate": "prisma migrate dev",
+    "generate": "prisma generate",
+    "studio": "prisma studio",
+    "lint": "next lint"
+  },
   "devDependencies": {
     "@types/node": "^22.15.29",
-    "prisma": "^6.9.0"
+    "prisma": "^6.9.0",
+    "typescript": "^5",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^4.1.8",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.4"
   },
   "dependencies": {
-    "@prisma/client": "^6.9.0"
+    "@prisma/client": "^6.9.0",
+    "autoprefixer": "^10.4.21"
   }
 }
