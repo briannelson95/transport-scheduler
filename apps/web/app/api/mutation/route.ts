@@ -9,7 +9,7 @@ export async function POST(req: Request) {
         const body = await req.json();
         const { mutation, params } = body;
 
-        const mutationFunction = (mutation as any)[mutation];
+        const mutationFunction = (mutations as any)[mutation];
 
         if (!mutationFunction) {
             return NextResponse.json({ error: `Unkown mutatio: ${mutation}` }, { status: 400 });

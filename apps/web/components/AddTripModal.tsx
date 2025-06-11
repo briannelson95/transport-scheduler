@@ -38,6 +38,42 @@ export default function AddTripModal({ show, onClose }: ModalProps) {
         setData({...data, hasWheelChair: booleanValue})
     };
 
+    const submitTripRequest = async (data: RequestData) => {
+        try {
+            const res = await fetch('/api/mutation', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    mutation: 'createTripRequest',
+                    params: {
+                        from_location: data.pickupLocation,
+                        to_location: data.dropoffLocation,
+                        date: data.date,
+                        passengers: data.passengers,
+                        nurseRequired: data.nurseRequired,
+                        hasWheelChair: data.hasWheelChair,
+                        numberWheelChair: data.numberWheelChair,
+                        recurring: data.recurring,
+                        requester_name: 'Requester Placeholder', // until we add real users
+                    },
+                }),
+            });
+
+            const result = await res.json();
+            console.log(result);
+
+            if (res.ok) {
+                alert('Trip request submitted!');
+                onClose(); // Optionally close modal after success
+            } else {
+                alert(`Error: ${result.error}`);
+            }
+        } catch (err) {
+            console.error(err);
+            alert('An unexpected error occurred');
+        }
+    }
+
     return (
         <div className='w-screen h-screen absolute top-0 left-0 bg-black/50 z-50'>
             <div className='w-full h-full relative flex justify-center items-center'>
@@ -221,7 +257,7 @@ export default function AddTripModal({ show, onClose }: ModalProps) {
                     <div className='w-full flex justify-end'>
                         <button 
                             className='mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 transition-colors duration-200'
-                            onClick={() => console.log(data)}
+                            onClick={() => submitTripRequest(data)}
                         >
                                 Submit
                             </button>
