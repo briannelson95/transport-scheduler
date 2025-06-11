@@ -36,20 +36,22 @@ model Trip {
   date           DateTime
   driver         Driver      @relation(fields: [driverId], references: [id])
   driverId       String
-  bus            Bus         @relation(fields: [busId], references: [id])
-  busId          String
+  bus            Bus?        @relation(fields: [busId], references: [id])
+  busId          String?
   from_location  TripLocation @relation("FromLocation", fields: [fromLocationId], references: [id])
   fromLocationId String
   to_location    TripLocation @relation("ToLocation", fields: [toLocationId], references: [id])
   toLocationId   String
   duration       Int
-  status         Canceled?
+  status         TripStatus  @default(Pending)
 
   users           User[] @relation("UserTrips")
   organizationId  String
   organization    Organization @relation(fields: [organizationId], references: [id])
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+
+  Canceled Canceled[]
 }
 
 model Driver {
@@ -88,6 +90,8 @@ model TripLocation {
 
   fromTrips       Trip[] @relation("FromLocation")
   toTrips         Trip[] @relation("ToLocation")
+
+  @@unique([name, organizationId])
 }
 
 model Canceled {
@@ -109,4 +113,12 @@ enum UserType {
   admin
   driver
   requester
+}
+
+enum TripStatus {
+  Approved
+  Pending
+  Canceled
+  Denied
+  Completed
 }

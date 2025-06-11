@@ -23,7 +23,7 @@ type Bus = {
 }
 
 type Canceled = {
-    canceled?: boolean = false;
+    canceled?: boolean;
     canceled_at?: string;
     canceled_by?: string;
     reason?: string;
@@ -60,4 +60,18 @@ interface RequestData {
     hasWheelChair: boolean;
     numberWheelChair?: number;
     recurring: boolean;
+}
+
+interface TripTableRow {
+    id: string;
+    requester_name: string;
+    date: string;
+    scheduled: "Approved" | "Pending" | "Canceled" | "Denied" | "Completed";
+    bus_info: {
+        number_passengers: number;
+        wheelchair: boolean;
+        nurse: boolean;
+    };
+    from_location: string;
+    to_location: string;
 }
